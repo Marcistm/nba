@@ -17,11 +17,7 @@ export const constRouter = [
       component: () => import('@/views/login/Login'),
       hidden: true //导航菜单忽略选项
   },
-  {
-    path: '/resetPass',
-    component: () => import('@/views/login/resetPass'),
-    hidden: true //导航菜单忽略选项
-  },
+
   {
       path: '',
       component: Layout, //应用布局页
@@ -29,19 +25,6 @@ export const constRouter = [
       hidden: true,
   },
 
-    {
-        path: '/AssemblePdf',
-        // component: () => import('@/views/tooling/Pdf'),
-        // hidden: true
-        component:Layout,
-        redirect: '/AssemblePdf',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/Pdf'),
-                name: 'AssemblePdf',
-            }]
-    },
   {
       path: '/index',
       component: Layout, //应用布局页
@@ -67,14 +50,7 @@ export const constRouter = [
 
 // 动态路由
 export const asyncRoutes = [
-    {
-        path: '/print',
-        component: () => import('@/views/tooling/Print'),
-        hidden:true,
-        meta: {
-            roles:['admin']
-        }
-    },
+
   {
     path: '/plan',
     component: Layout,
@@ -97,18 +73,6 @@ export const asyncRoutes = [
                 component: () => import('@/views/tooling/Report'),
                 name: 'Report',
                 meta: { title: '工装报工', icon: 'el-icon-edit-outline', roles: ['worker','admin'] }
-            }]
-    },
-    {
-        path: '/del_report',
-        component: Layout,
-        redirect: '/del_report',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/DelReport'),
-                name: 'DelReport',
-                meta: { title: '撤销报工', icon: 'el-icon-delete', roles: ['admin'] }
             }]
     },
 

@@ -20,7 +20,6 @@
                     下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="changePass">修改密码</el-dropdown-item>
                     <el-dropdown-item divided command="quit">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -99,9 +98,6 @@ export default {
         handleCommand(command){
 
             switch(command){
-                case 'changePass':
-                    this.$router.replace('/resetPass')
-                break;
                 case 'quit':
                     let src = this.$store.dispatch('user/resetToken')
                     this.$store.dispatch('delAllViews')

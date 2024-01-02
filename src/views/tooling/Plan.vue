@@ -23,9 +23,6 @@
     <el-form-item>
       <el-button type="primary" @click="search">search</el-button>
     </el-form-item>
-    <el-form-item>
-      <el-button v-if="table[0].work_number!==''" type="primary" @click="all_print">全部打印</el-button>
-    </el-form-item>
   </el-form>
   <el-table :data="table" v-if="tag" >
     <el-table-column label="工装料号" prop="tooling_no" width="100"></el-table-column>
@@ -61,11 +58,6 @@
     </el-table-column>
 
     <el-table-column label="状态" prop="condition"></el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button type="primary" :disabled="!['已排产','已打印'].includes(scope.row.condition)" @click="to_print(scope.row.work_row_item)">打印</el-button>
-      </template>
-    </el-table-column>
   </el-table>
   <el-dialog :visible.sync="dialog" >
     <el-form :inline="true">
