@@ -208,33 +208,7 @@ export default {
         }
       }
     },
-    all_print(){
-      this.data.forEach(item=>{
-        if (item['condition']!=='未排产'){
-        this.to_print(item['work_row_item'])}
-      })
-    },
-    to_print(work_row_item){
-      const index = parseInt(work_row_item.split('-')[1])
-      if (this.data[0].work_row_item.split('-')[1] === '0') {
-        this.data.splice(index, 1, {
-          ...this.data[index],
-          condition: '已打印'
-        })
-      } else {
-        this.data.splice(index - 1, 1, {
-          ...this.data[index - 1],
-          condition: '已打印'
-        })
-      }
-      let newtab = this.$router.resolve({
-        path: '/print',
-        query: {
-          work_row_item:work_row_item,
-        }
-      })
-      window.open(newtab.href, '_blank')
-    },
+
 
     save_work(){
       const hasEmptyString = arr => arr.includes("");

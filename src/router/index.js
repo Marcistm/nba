@@ -63,33 +63,6 @@ export const asyncRoutes = [
               meta: { title: '工装排产', icon: 'el-icon-s-order', roles: ['admin'] }
           }]
   },
-    {
-        path: '/report',
-        component: Layout,
-        redirect: '/report',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/Report'),
-                name: 'Report',
-                meta: { title: '工装报工', icon: 'el-icon-edit-outline', roles: ['worker','admin'] }
-            }]
-    },
-
-
-    {
-        path: '/board',
-        component: Layout,
-        redirect: '/board',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/Board'),
-                name: 'Board',
-                meta: { title: '工单进度', icon: 'el-icon-data-board', roles: ['board','admin']}
-            }]
-    },
-
 
 
 
