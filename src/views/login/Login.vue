@@ -3,7 +3,7 @@
         <!-- 登录面板 -->
         <div class="login-box">
             <div class="login-box-title">
-                ToolingSystem
+                To-Do List
             </div>
             <div class="login-box-from">
                 <el-form :model="loginForm" :rules="rules" ref="loginForm"  class="demo-ruleForm">
@@ -72,43 +72,25 @@ export default {
           });
       },
       login(){
-        // let path = 'http://127.0.0.1:5000/login'
-        let path = 'http://127.0.0.1:6325/login'
-        let param = {
-          work_id: this.loginForm.username,
-          password: this.loginForm.password
-        }
-        axios.get(path, { params: param, timeout: 300000 }).then(responses => {
-          if (responses.data.code === 200) {
-            if (responses.data.tooling_privilege === '0') {
-              this.loading = false
-              this.$message.error('没有登录系统的权限，请向OA申请')
-            } else {
-              localStorage.setItem('permission', responses.data.tooling_privilege)
+
+              localStorage.setItem('permission', '3')
               setUser(this.loginForm.username)
               this.$store
-                  .dispatch('user/login',{token: responses.data.token})
+                  .dispatch('user/login',{token: 'abcd'})
                   .then(()=>{
                     this.loading = true
                     // 登陆成功后重定向
                     // 如果初次登录跳转到更改密码页面
-                    setUserName(responses.data.name)
+                    setUserName('admin')
                       this.$router.push('/')
                   })
                   .catch(err=>{
                     this.loading = true
                     // console.log(err)
                   })
-            }
-          } else {
-            this.loading = false
-            this.$message.error(responses.data.msg)
-          }
-        }).catch(error => {
-          this.loading = false
-          this.$message.error('请求超时，请检查网络连接')
-          console.log(error)
-        })
+
+
+
       }
     }
 }

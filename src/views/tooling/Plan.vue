@@ -2,7 +2,10 @@
 <div>
   <el-form :inline="true" style="margin-top: 10px">
     <el-form-item label="item" >
-      <el-input v-model="file"></el-input>
+      <el-input v-model="item"></el-input>
+    </el-form-item>
+    <el-form-item label="remark">
+      <el-input v-model="remark" type="textarea" ></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="success" @click="add">add</el-button>
@@ -16,20 +19,23 @@
   </el-form>
   <el-table :data="table" v-if="tag" >
     <el-table-column label="item_number" prop="tooling_no" width="150"></el-table-column>
-    <el-table-column label="item" prop="tooling_name"></el-table-column>
+    <el-table-column label="item" prop="item">
+      <template slot-scope="scope">
+        <el-input v-model="scope.row.item" type="textarea" ></el-input>
+      </template>
+    </el-table-column>
     <el-table-column label="remark">
       <template slot-scope="scope">
-        <el-input v-model="scope.row.work_order_memo" type="textarea" ></el-input>
+        <el-input v-model="scope.row.remark" type="textarea" ></el-input>
       </template>
     </el-table-column>
     <el-table-column label="操作">
-      <el-button type="primary" @click="submit">save</el-button>
+      <template slot-scope="scope">
+        <el-button type="primary" @click="submit">save</el-button>
+        <el-button type="danger" @click="del">delete</el-button>
+      </template>
+
     </el-table-column>
-  </el-table>
-  <el-table :data="data"  v-if="tag" ref="myTable" >
-    <el-table-column label="item_number" prop="work_row_item" width="150">
-    </el-table-column>
-    <el-table-column label="item" prop="condition"></el-table-column>
   </el-table>
 </div>
 </template>
@@ -42,9 +48,8 @@ export default {
   name: "Plan",
   data(){
     return{
-      pos:'',
-
-      file:'',
+      remark:'',
+      item:'',
       edit_tag:false,
       work_name_table:[],
       work_procedure_table:[],
@@ -95,14 +100,19 @@ export default {
 
     },
     add() {
-        this.table[0].work_number=''
-      if (this.file === '') {
+      if (this.item === '') {
         this.$message.error('Please fill in the name of the project')
         return
       }
-      this.table[0].tooling_name=this.file
+      let path = 'http://127.0.0.1:6325/to_do_list/create/submit'
+      let params = {
+        item: this.item,
+        remark: this.remark
+      }
+      axios.post(path, params).then(res => {
+        this.$message.success('添加成功')
+      })
       this.tag = true
-
 
     },
     search(){

@@ -60,7 +60,7 @@ export const asyncRoutes = [
               path: '',
               component: () => import('@/views/tooling/Plan'),
               name: 'Plan',
-              meta: { title: '工装排产', icon: 'el-icon-s-order', roles: ['admin'] }
+              meta: { title: 'List', icon: 'el-icon-s-order', roles: ['admin'] }
           }]
   },
 
