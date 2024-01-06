@@ -17,8 +17,8 @@
       <el-button type="primary" @click="search">search</el-button>
     </el-form-item>
   </el-form>
-  <el-table :data="table" v-if="tag" >
-    <el-table-column label="item_number" prop="tooling_no" width="150"></el-table-column>
+  <el-table :data="data" v-if="tag" >
+    <el-table-column label="item_number" prop="item_number" width="150"></el-table-column>
     <el-table-column label="item" prop="item">
       <template slot-scope="scope">
         <el-input v-model="scope.row.item" type="textarea" ></el-input>
@@ -31,8 +31,8 @@
     </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button type="primary" @click="submit">save</el-button>
-        <el-button type="danger" @click="del">delete</el-button>
+        <el-button type="primary" @click="submit(scope.row)">save</el-button>
+        <el-button type="danger" @click="del(scope.row.item_number)">delete</el-button>
       </template>
 
     </el-table-column>
@@ -51,8 +51,6 @@ export default {
       remark:'',
       item:'',
       edit_tag:false,
-      work_name_table:[],
-      work_procedure_table:[],
       dialog:false,
       work_number:'',
       tag:false,
@@ -72,39 +70,38 @@ export default {
   },
   methods:{
 
-    del(){
-      MessageBox.confirm('确定要删除吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+    del(number){
+      MessageBox.confirm('Are you sure you want to delete it？', 'tip', {
+        confirmButtonText: 'yes',
+        cancelButtonText: 'no',
         type: 'warning'
       })
           .then(() => {
-            let path='http://127.0.0.1:6325/tooling_process/del'
+            let path='http://127.0.0.1:6325/del'
             let parmas={
-              work_number:this.table[0].work_number
+              work_number:number
             }
             axios.get(path,{params:parmas}).then(res=>{
               if (res.data.code===200){
-                this.$message.success('删除成功')
-                this.tag=false
-                this.work_number=''
+                this.$message.success('delete success')
+                this.search()
               }
             })
           })
           .catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消删除'
+              message: 'cancel'
             });
           });
 
     },
     add() {
       if (this.item === '') {
-        this.$message.error('Please fill in the name of the project')
+        this.$message.error('Please fill in the name of the item')
         return
       }
-      let path = 'http://127.0.0.1:6325/to_do_list/create/submit'
+      let path = 'http://127.0.0.1:6325/create'
       let params = {
         item: this.item,
         remark: this.remark
@@ -112,43 +109,36 @@ export default {
       axios.post(path, params).then(res => {
         this.$message.success('添加成功')
       })
-      this.tag = true
+
 
     },
     search(){
-      if (this.work_number === ''&this.table[0].work_number==='') {
-        this.$message.error('工单号未填')
-      }else {
-        let path = 'http://127.0.0.1:6325/tooling_process/plan/search'
+
+        let path = 'http://127.0.0.1:6325/search'
         let paramas = {
           work_number:this.work_number
         }
         axios.get(path, {
           params: paramas
         }).then(res => {
-          this.table[0].tooling_no = res.data.tooling_no
-          this.table[0].tooling_name = res.data.tooling_name
-          this.table[0].tooling_map = res.data.tooling_map
-          this.table[0].process_num=res.data.process_num
-          this.table[0].work_order_memo=res.data.work_order_memo
-          this.table[0].oa_id=res.data.oa_id
-          this.data = res.data.data
-
-          this.tag = true
-          this.$set(this.table[0], 'work_number', this.work_number)
+          if (res.data.code===200){
+            this.data = res.data.data
+            this.tag = true
+          }else {
+            this.$message.error('not found')
+          }
 
         })
-      }
-    },
-    submit(){
-      let path='http://127.0.0.1:6325/tooling_process/create/submit'
 
-      let params={header:this.table}
-      axios.post(path,params).then(res=>{
+    },
+    submit(row){
+      let path='http://127.0.0.1:6325/update'
+
+      let params={item_number:row.item_number,item:row.item,remark:row.remark}
+      axios.get(path,{params:params}).then(res=>{
         if (res.data.code===200){
             this.$message.success('save success')
         }
-
       })
     }
 

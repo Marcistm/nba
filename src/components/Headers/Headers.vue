@@ -15,14 +15,6 @@
             </div>
             <div class="headers-right-right">
               <div class="user-name" style="padding-right: 10px"><span>{{ username }}</span></div>
-              <el-dropdown size="medium" @command="handleCommand">
-                <span class="el-dropdown-link">
-                    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item divided command="quit">退出登录</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
             </div>
 
         </div>

@@ -81,7 +81,7 @@ export default {
                     this.loading = true
                     // 登陆成功后重定向
                     // 如果初次登录跳转到更改密码页面
-                    setUserName('admin')
+                    setUserName(this.loginForm.username)
                       this.$router.push('/')
                   })
                   .catch(err=>{

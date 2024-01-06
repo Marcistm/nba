@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar">
-    <div class="sidebar-title"><img src="../../assets/image/logo.png" style="width: 80%"/>三坐标管理系统</div>
     <div class="sidebar-box">
       <el-menu
         class="el-menu-vertical-demo"

@@ -30,7 +30,7 @@ export const constRouter = [
       component: Layout, //应用布局页
       name: 'index',
       meta:{
-          title: "首页", //导航菜单项标题
+          title: "index", //导航菜单项标题
           icon: 'el-icon-edit' //导航菜单图标
       },
       children: [
@@ -39,7 +39,7 @@ export const constRouter = [
           component: () => import('@/views/index/index.vue'),
           name: 'indexs',
           meta: {
-            title: "首页",
+            title: "index",
             icon: 'el-icon-edit',
             roles: ['admin']
           }
