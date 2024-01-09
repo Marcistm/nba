@@ -106,7 +106,7 @@ export default {
         item: this.item,
         remark: this.remark
       }
-      axios.post(path, params).then(res => {
+      axios.get(path,{params:params}).then(res => {
         this.$message.success('添加成功')
       })
 
