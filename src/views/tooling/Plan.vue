@@ -81,7 +81,7 @@ export default {
             let parmas={
               work_number:number
             }
-            axios.get(path,{params:parmas}).then(res=>{
+            axios.delete(path,{params:parmas}).then(res=>{
               if (res.data.code===200){
                 this.$message.success('delete success')
                 this.search()
@@ -106,7 +106,7 @@ export default {
         item: this.item,
         remark: this.remark
       }
-      axios.get(path,{params:params}).then(res => {
+      axios.post(path,params).then(res => {
         this.$message.success('添加成功')
       })
 
@@ -135,7 +135,7 @@ export default {
       let path='http://127.0.0.1:6325/update'
 
       let params={item_number:row.item_number,item:row.item,remark:row.remark}
-      axios.get(path,{params:params}).then(res=>{
+      axios.put(path,{params:params}).then(res=>{
         if (res.data.code===200){
             this.$message.success('save success')
         }
