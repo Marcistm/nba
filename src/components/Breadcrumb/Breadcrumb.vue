@@ -33,7 +33,7 @@ export default {
     },
     methods:{
         getBreadcrumb(){
-             
+
             // 面包屑仅显示包含meta.title 且 item.meta.breadcrumb不为falsed 的路由
             let metched = this.$route.matched.filter(
                 item => item.meta && item.meta.title && item.meta.breadcrumb !== false
@@ -41,13 +41,13 @@ export default {
            console.log(metched)
             // 跟路由
             const first = metched[0];
-            
+
 
             // 根匹配只要不是home,就作为home下一级
             if(!this.isHome(first)){
-                metched = [{ refirect: '/index', meta: { title: '首页' }}].concat(metched)
+                metched = [{ refirect: '/index', meta: { title: 'index' }}].concat(metched)
             }
-             
+
             // 处理完指定到levelList
             this.levelList = metched
         },

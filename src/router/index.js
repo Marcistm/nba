@@ -47,7 +47,7 @@ export const constRouter = [
       component: Layout, //应用布局页
       name: 'index',
       meta:{
-          title: "首页", //导航菜单项标题
+          title: "index", //导航菜单项标题
           icon: 'el-icon-edit' //导航菜单图标
       },
       children: [
@@ -56,7 +56,7 @@ export const constRouter = [
           component: () => import('@/views/index/index.vue'),
           name: 'indexs',
           meta: {
-            title: "首页",
+            title: "index",
             icon: 'el-icon-edit',
             roles: ['admin']
           }
@@ -84,19 +84,19 @@ export const asyncRoutes = [
               path: '',
               component: () => import('@/views/tooling/Plan'),
               name: 'Plan',
-              meta: { title: '工装排产', icon: 'el-icon-s-order', roles: ['admin'] }
+              meta: { title: 'Game', icon: 'el-icon-s-order', roles: ['admin'] }
           }]
   },
     {
-        path: '/report',
+        path: '/game',
         component: Layout,
-        redirect: '/report',
+        redirect: '/game',
         children: [
             {
                 path: '',
                 component: () => import('@/views/tooling/Report'),
                 name: 'Report',
-                meta: { title: '工装报工', icon: 'el-icon-edit-outline', roles: ['worker','admin'] }
+                meta: { title: 'Game', icon: 'el-icon-edit-outline', roles: ['worker','admin'] }
             }]
     },
     {

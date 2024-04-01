@@ -2,45 +2,13 @@
 <div>
 
   <el-form :inline="true" style="margin-top: 10px">
-    <el-form-item label="工单号码">
-      <el-input v-model="work_number"></el-input>
-    </el-form-item>
-    <el-form-item label="工序">
-      <el-select  v-model="work_procedure" placeholder="请选择"  clearable>
-        <el-option
-            v-for="item in work_name_table"
-            :key="item.work_name"
-            :label="item.work_name"
-            :value="item.work_name">
-        </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="search">search</el-button>
-    </el-form-item>
-
+    <el-date-picker
+        v-model="value1"
+        type="date"
+        placeholder="Date">
+    </el-date-picker>
   </el-form>
-  <el-table :data="data">
-    <el-table-column label="工单行项目" prop="work_row_item" width="120"></el-table-column>
-    <el-table-column label="物料号" prop="tooling_no" width="60"></el-table-column>
 
-    <el-table-column label="加工数量" prop="process_num" width="60"></el-table-column>
-    <el-table-column label="工序名称" prop="work_procedure" width="60"></el-table-column>
-    <el-table-column label="工序备注" prop="work_memo"></el-table-column>
-    <el-table-column label="子工单备注" prop="work_row_memo"></el-table-column>
-    <el-table-column label="工单备注" prop="work_order_memo"></el-table-column>
-    <el-table-column label="加工人员" prop="worker" width="60">
-    </el-table-column>
-    <el-table-column label="开始时间" prop="start_time"></el-table-column>
-
-    <el-table-column label="状态" prop="condition" width="60"></el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button type="primary" :disabled="scope.row.tag" v-if="scope.row.condition==='未开始'" @click="start(scope.row)">开始加工</el-button>
-        <el-button type="danger" v-if="scope.row.condition==='已开始'" @click="end(scope.row)">结束加工</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
 
 </div>
 </template>

@@ -3,7 +3,7 @@
         <!-- 登录面板 -->
         <div class="login-box">
             <div class="login-box-title">
-                ToolingSystem
+                NBA
             </div>
             <div class="login-box-from">
                 <el-form :model="loginForm" :rules="rules" ref="loginForm"  class="demo-ruleForm">
@@ -75,16 +75,18 @@ export default {
         // let path = 'http://127.0.0.1:5000/login'
         let path = 'http://127.0.0.1:6325/login'
         let param = {
-          work_id: this.loginForm.username,
+          username: this.loginForm.username,
           password: this.loginForm.password
         }
+        param.username = 'test'
+        param.password = '12345678'
         axios.get(path, { params: param, timeout: 300000 }).then(responses => {
           if (responses.data.code === 200) {
-            if (responses.data.tooling_privilege === '0') {
+            if (responses.data.privilege === '0') {
               this.loading = false
-              this.$message.error('没有登录系统的权限，请向OA申请')
+              this.$message.error('No Permission')
             } else {
-              localStorage.setItem('permission', responses.data.tooling_privilege)
+              localStorage.setItem('permission', responses.data.privilege)
               setUser(this.loginForm.username)
               this.$store
                   .dispatch('user/login',{token: responses.data.token})
@@ -112,7 +114,7 @@ export default {
           }
         }).catch(error => {
           this.loading = false
-          this.$message.error('请求超时，请检查网络连接')
+          this.$message.error('Network Error')
           console.log(error)
         })
       }

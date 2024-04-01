@@ -4,12 +4,6 @@
               :cell-style="{textAlign: 'center', borderColor: 'black'}"
 
               :span-method="mergeCells">
-      <el-table-column  prop="item1">
-        <template slot-scope="scope">
-          <img v-if="scope.$index===0" src="../../assets/image/logo.png" style="width: 400px; height: 130px;">
-          <span v-else>{{scope.row.item1}}</span>
-        </template>
-      </el-table-column>
       <el-table-column  prop="item2"></el-table-column>
       <el-table-column  prop="item3" width="100"></el-table-column>
       <el-table-column  prop="item4">
