@@ -29,19 +29,6 @@ export const constRouter = [
       hidden: true,
   },
 
-    {
-        path: '/AssemblePdf',
-        // component: () => import('@/views/tooling/Pdf'),
-        // hidden: true
-        component:Layout,
-        redirect: '/AssemblePdf',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/Pdf'),
-                name: 'AssemblePdf',
-            }]
-    },
   {
       path: '/index',
       component: Layout, //应用布局页
@@ -99,32 +86,7 @@ export const asyncRoutes = [
                 meta: { title: 'Game', icon: 'el-icon-edit-outline', roles: ['worker','admin'] }
             }]
     },
-    {
-        path: '/del_report',
-        component: Layout,
-        redirect: '/del_report',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/DelReport'),
-                name: 'DelReport',
-                meta: { title: '撤销报工', icon: 'el-icon-delete', roles: ['admin'] }
-            }]
-    },
 
-
-    {
-        path: '/board',
-        component: Layout,
-        redirect: '/board',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/tooling/Board'),
-                name: 'Board',
-                meta: { title: '工单进度', icon: 'el-icon-data-board', roles: ['board','admin']}
-            }]
-    },
 
 
 
