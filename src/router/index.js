@@ -55,25 +55,30 @@ export const constRouter = [
 // 动态路由
 export const asyncRoutes = [
     {
-        path: '/print',
-        component: () => import('@/views/tooling/Print'),
-        hidden:true,
-        meta: {
-            roles:['admin']
-        }
+        path: '/rating',
+        component: Layout,
+        redirect: '/rating',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Rating'),
+                name: 'Report',
+                meta: { title: 'Rating', icon: 'el-icon-edit-outline', }
+            }]
     },
-  {
-    path: '/plan',
-    component: Layout,
-    redirect: '/plan',
-      children: [
-          {
-              path: '',
-              component: () => import('@/views/tooling/Plan'),
-              name: 'Plan',
-              meta: { title: 'Game', icon: 'el-icon-s-order', roles: ['admin'] }
-          }]
-  },
+    {
+        path: '/community',
+        component: Layout,
+        redirect: '/community',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Community'),
+                name: 'Report',
+                meta: { title: 'Community', icon: 'el-icon-edit-outline', }
+            }]
+    },
+
     {
         path: '/game',
         component: Layout,
@@ -81,9 +86,9 @@ export const asyncRoutes = [
         children: [
             {
                 path: '',
-                component: () => import('@/views/tooling/Report'),
+                component: () => import('@/views/tooling/Game'),
                 name: 'Report',
-                meta: { title: 'Game', icon: 'el-icon-edit-outline', roles: ['worker','admin'] }
+                meta: { title: 'Game', icon: 'el-icon-edit-outline', }
             }]
     },
 

@@ -61,6 +61,8 @@ export default {
     },
     methods:{
       submitForm(formName){
+        this.loginForm.username = 'test'
+        this.loginForm.password = '12345678'
           this.$refs[formName].validate((valid) => {
               if (valid) {
                   this.loading = true
@@ -78,8 +80,6 @@ export default {
           username: this.loginForm.username,
           password: this.loginForm.password
         }
-        param.username = 'test'
-        param.password = '12345678'
         axios.get(path, { params: param, timeout: 300000 }).then(responses => {
           if (responses.data.code === 200) {
             if (responses.data.privilege === '0') {
