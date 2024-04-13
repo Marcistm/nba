@@ -35,7 +35,7 @@ const actions = {
                 // const roles = state.token === 'admin' ? ['admin'] : ['jerry']
                 let roles = []
                 let judge = parseInt(localStorage.getItem('permission'))
-                let permission_lis = [[''], ['worker'], ['examiner'], ['admin']]
+                let permission_lis = [[''], ['user'], ['admin']]
                 roles = permission_lis[judge]
                 // const roles = state.token === '' ? ['jerry'] : ['admin']
                 commit('SET_ROLES',roles)

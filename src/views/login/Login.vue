@@ -37,9 +37,9 @@ export default {
         let letterRule = (rule, value, callback) => {
             let reg = /^[a-zA-Z0-9_-]{4,18}$/
             if (value === '') {
-                callback(new Error('输入内容不能为空'));
+                callback(new Error('The input content cannot be empty'));
             }else if(!reg.test(value)) {
-                callback(new Error('请输入字母、数字、下划线'));
+                callback(new Error('Please enter letters, numbers, and underscores'));
             }else{
                 callback();
             }
@@ -52,8 +52,8 @@ export default {
             },
             rules:{  //登陆验证规则
                 password: [
-                    { required: true, message: '请输入密码', trigger: 'blur' },
-                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' },
+                    { required: true, message: 'Please enter password', trigger: 'blur' },
+                    { min: 6, max: 16, message: 'Length between 6 and 16 characters', trigger: 'blur' },
                     { validator: letterRule, trigger: 'blur' }
                 ]
             }

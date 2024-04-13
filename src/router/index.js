@@ -55,15 +55,15 @@ export const constRouter = [
 // 动态路由
 export const asyncRoutes = [
     {
-        path: '/rating',
+        path: '/evaluate',
         component: Layout,
-        redirect: '/rating',
+        redirect: '/evaluate',
         children: [
             {
                 path: '',
-                component: () => import('@/views/Rating'),
+                component: () => import('@/views/Evaluate'),
                 name: 'Report',
-                meta: { title: 'Rating', icon: 'el-icon-edit-outline', }
+                meta: { title: 'Evaluate', icon: 'el-icon-edit-outline', }
             }]
     },
     {
@@ -78,6 +78,18 @@ export const asyncRoutes = [
                 meta: { title: 'Community', icon: 'el-icon-edit-outline', }
             }]
     },
+    {
+        path: '/rank',
+        component: Layout,
+        redirect: '/rank',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Rank'),
+                name: 'Report',
+                meta: { title: 'Rank', icon: 'el-icon-edit-outline', }
+            }]
+    },
 
     {
         path: '/game',
@@ -86,7 +98,7 @@ export const asyncRoutes = [
         children: [
             {
                 path: '',
-                component: () => import('@/views/tooling/Game'),
+                component: () => import('@/views/Game'),
                 name: 'Report',
                 meta: { title: 'Game', icon: 'el-icon-edit-outline', }
             }]
