@@ -6,3 +6,12 @@ export function getCurrentDate() {
      // 将年月日拼接成日期字符串
     return `${year}-${month}-${day}`; // 返回当前日期字符串
 }
+export function convertColsToNumber(data,col) {
+    // 遍历字典数组，将 rate 列转换为浮点数
+    data.forEach(row => {
+        // 检查 rate 列是否存在且不为空
+
+         row[col] = Number(row[col]);
+
+    });
+}
