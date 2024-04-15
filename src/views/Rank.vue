@@ -1,7 +1,14 @@
 <template>
 <div>
-  <el-tabs></el-tabs>
-  <el-table></el-table>
+  <el-tabs v-model="region">
+    <el-tab-pane label="East" name="East"></el-tab-pane>
+    <el-tab-pane label="West" name="West"></el-tab-pane>
+  </el-tabs>
+  <el-table :data="data">
+    <el-table-column label="team"></el-table-column>
+    <el-table-column label="W"></el-table-column>
+    <el-table-column label="L"></el-table-column>
+  </el-table>
 </div>
 </template>
 
@@ -13,6 +20,7 @@ export default {
   },
   data(){
     return{
+      region:'',
       data:[]
     }
   },

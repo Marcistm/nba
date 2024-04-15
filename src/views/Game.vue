@@ -1,5 +1,6 @@
 <template>
   <div class="schedule">
+    <el-date-picker v-model="date"></el-date-picker>
     <el-card  v-for="(game, index) in data" :key="index" class="game">
       <div slot="header" class="game-header">
         <div class="team-button" @click="detail(game.gameId,'home')">{{ game.homeTeam }}</div>
@@ -91,6 +92,7 @@ export default {
 
   },
   mounted() {
+    this.date=getCurrentDate()
     this.search()
     // this.data=game
   }
@@ -100,8 +102,7 @@ export default {
 <style scoped>
 .schedule {
   text-align: center;
-  display: flex;
-  flex-wrap: wrap;
+
 }
 
 .game {
