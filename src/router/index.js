@@ -103,6 +103,18 @@ export const asyncRoutes = [
                 meta: { title: 'Game', icon: 'el-icon-edit-outline', }
             }]
     },
+    {
+        path: '/user',
+        component: Layout,
+        redirect: '/user',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/User'),
+                name: 'Report',
+                meta: { title: 'User', icon: 'el-icon-edit-outline',roles:['admin'] }
+            }]
+    },
 
 
 

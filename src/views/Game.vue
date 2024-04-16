@@ -94,7 +94,7 @@ export default {
   mounted() {
     this.date=getCurrentDate()
     this.search()
-    // this.data=game
+    this.data=game
   }
 }
 </script>
