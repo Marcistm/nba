@@ -14,9 +14,6 @@
     <el-form-item>
       <el-button type="primary" @click="search">search</el-button>
     </el-form-item>
-    <el-form-item>
-      <el-button v-permission="['admin']" type="primary" @click="search">admin search</el-button>
-    </el-form-item>
   </el-form>
   <el-table :data="data" v-if="tag">
     <el-table-column label="player" prop="name"></el-table-column>
@@ -61,12 +58,12 @@ export default {
   },
   methods:{
     save(row){
-      save(row,'evaluate')
+      save(row,'evaluate_report')
       this.$message.success('change success')
     },
     search(){
       this.tag=false
-      let path='http://127.0.0.1:6325/evaluate/search'
+      let path='http://127.0.0.1:6325/report/search'
       let params={
         username:getUserName()
       }
@@ -91,7 +88,7 @@ export default {
         confirmButtonText: '确定',
         type: 'warning'
       }).then(() => {
-        del(id,index,'evaluate',this.data)
+        del(id,index,'evaluate_report',this.data)
         this.$notify({
           title: 'success',
           message: 'delete success',

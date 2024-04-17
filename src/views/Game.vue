@@ -1,20 +1,24 @@
 <template>
   <div class="schedule">
-    <el-date-picker v-model="date"></el-date-picker>
+    <el-date-picker v-model="date" value-format="yyyy-MM-dd" @change="search"></el-date-picker>
     <el-card  v-for="(game, index) in data" :key="index" class="game">
       <div slot="header" class="game-header">
-        <div class="team-button" @click="detail(game.gameId,'home')">{{ game.homeTeam }}</div>
+        <div class="team-button" @click="detail(game,'home')" >{{ game.homeTeam }}</div>
         <span class="vs">vs</span>
-        <div class="team-button" @click="detail(game.gameId,'away')">{{ game.awayTeam }}</div>
+        <div class="team-button" @click="detail(game,'away')">{{ game.awayTeam }}</div>
       </div>
       <div class="game-content">
-        <p class="score">{{ game.homeTeamScore }} - {{ game.awayTeamScore }}</p>
+        <p class="score" v-if="game.homeTeamScore!==''">{{ game.homeTeamScore }} - {{ game.awayTeamScore }}</p>
         <p class="time">{{ game.gameTimeLTZ }}</p>
       </div>
     </el-card>
     <el-dialog :visible.sync="tag">
-      <el-table :data="table">
-        <el-table-column label="name" prop="name"></el-table-column>
+      <el-table :data="table" max-height="600">
+        <el-table-column label="name" prop="name" width="200">
+          <template slot-scope="scope">
+            <el-button type="text">{{scope.row.name}}</el-button>
+          </template>
+        </el-table-column>
         <el-table-column label="points" prop="points"></el-table-column>
         <el-table-column label="reboundsTotal" prop="reboundsTotal"></el-table-column>
         <el-table-column label="assists" prop="assists"></el-table-column>
@@ -39,6 +43,7 @@
       </el-table>
     </el-dialog>
     <evaluate-dialog ref="EvaluateDialog" ></evaluate-dialog>
+    <player-comments ref="playerComments"></player-comments>
   </div>
 </template>
 
@@ -48,9 +53,10 @@ import {getUserName, removeToken} from "@/utils/auth";
 import {getCurrentDate} from "@/utils/util";
 import game from "@/data/game";
 import EvaluateDialog from "@/components/EvaluateDialog";
+import PlayerComments from "@/components/PlayerComments";
 export default {
   name: "Report",
-  components: {EvaluateDialog},
+  components: {PlayerComments, EvaluateDialog},
   data(){
     return{
       date:'',
@@ -66,26 +72,38 @@ export default {
   methods:{
     evaluate(row){
       this.$refs.EvaluateDialog.row=row
-      console.log(row)
       this.$refs.EvaluateDialog.tag=true
     },
-    detail(gameId,type){
+    playerComments(gameId,name){
+      this.$refs.playerComments.player=name
+      this.$refs.playerComments.gameId=gameId
+      this.$refs.playerComments.get(gameId,name)
+      this.$refs.playerComments.tag=true
+    },
+    detail(game,type){
+      if (game.homeTeamScore===''){
+        this.$message.error('game not start')
+        return
+      }
       let path='http://127.0.0.1:6325/game/detail'
       let params={
-        gameId:gameId,
+        gameId:game.gameId,
         type:type
       }
       axios.get(path,{params:params}).then(res=>{
         if (res.data.code===200){
           this.tag=true
-          this.gameId=gameId
+          this.gameId=game.gameId
           this.table=res.data.data
         }
       })
     },
     search(){
       let path='http://127.0.0.1:6325/game/search'
-      axios.get(path).then(res=>{
+      let params={
+        date:this.date
+      }
+      axios.get(path,{params:params}).then(res=>{
         this.data=res.data.data
       })
     },
@@ -94,7 +112,8 @@ export default {
   mounted() {
     this.date=getCurrentDate()
     this.search()
-    this.data=game
+    this.playerComments('0022301171','Kelly Oubre Jr.')
+    // this.data=game
   }
 }
 </script>
