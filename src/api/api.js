@@ -25,3 +25,12 @@ export function save(row,table){
         })
 }
 
+
+export function getTeams() {
+    const path = 'http://127.0.0.1:6325/team/get';
+    return axios.get(path)
+        .then((res) => {
+            return res.data.data;
+        })
+}
+

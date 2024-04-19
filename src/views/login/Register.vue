@@ -3,11 +3,21 @@
         <!-- 重设密码面板 -->
         <div class="login-box">
             <div class="login-box-title">
-              Change password
+              Register
             </div>
             <div class="login-box-from">
                 <el-form :model="loginForm" :rules="rules" ref="loginForm"  class="demo-ruleForm">
-                    <el-form-item prop="password" label="New password">
+                  <el-form-item prop="username" label="username">
+                    <el-input v-model="loginForm.username" placeholder="Please enter username" size="medium" >
+                      <el-button slot="prepend" icon="el-icon-key"></el-button>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item prop="name" label="name">
+                    <el-input v-model="loginForm.name" placeholder="Please enter name" size="medium" type="password">
+                      <el-button slot="prepend" icon="el-icon-key"></el-button>
+                    </el-input>
+                  </el-form-item>
+                    <el-form-item prop="password" label="password">
                         <el-input v-model="loginForm.password" placeholder="Please enter password" size="medium" type="password">
                             <el-button slot="prepend" icon="el-icon-key"></el-button>
                         </el-input>
@@ -30,7 +40,7 @@
 
 <script>
 import axios from 'axios'
-import { getUser } from "@/utils/auth";
+import {getUser, setUser, setUserName} from "@/utils/auth";
 
 export default {
     data(){
@@ -40,9 +50,9 @@ export default {
       };
       const validateRePass = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
+          callback(new Error('Please enter your password again'));
         } else if (value !== this.loginForm.password) {
-          callback(new Error('两次输入密码不一致!'));
+          callback(new Error('The passwords entered twice are inconsistent!'));
         } else {
           callback();
         }
@@ -50,10 +60,18 @@ export default {
         return {
             loading: false, //登陆状态
             loginForm:{  // 登陆表单
+              username:'',
+              name:'',
                 password: '',
                 repass: ''
             },
             rules:{  //登陆验证规则
+              username:[
+                { validator: validatePass, trigger: 'blur' }
+              ],
+              name: [
+                { required:true, trigger: 'blur' }
+              ],
                 password:[
                     { validator: validatePass, trigger: 'blur' }
                 ],
@@ -76,20 +94,39 @@ export default {
             });
         },
         login(){
-          let path = 'http://127.0.0.1:6325/change_pswd'
+          let path = 'http://127.0.0.1:6325/user/register'
           let value = {
-            'work_id': getUser(),
+            'name':this.loginForm.name,
+            'username': this.loginForm.username,
             'password': this.loginForm.password
           }
-          axios.put(path, value).then(responses => {
+          axios.get(path, { params:value, timeout: 300000 }).then(responses => {
             if (responses.data.code === 200) {
-              this.$router.push({
-                path: this.$route.query.redirect || '/index'
-              })
+                localStorage.setItem('permission', responses.data.privilege)
+                setUser(this.loginForm.username)
+                this.$store
+                    .dispatch('user/login',{token: responses.data.token})
+                    .then(()=>{
+                      this.loading = true
+                      // 登陆成功后重定向
+                      // 如果初次登录跳转到更改密码页面
+                      setUserName(responses.data.name)
+
+                        this.$router.push('/')
+                    })
+                    .catch(err=>{
+                      this.loading = true
+                      // console.log(err)
+                    })
+
             } else {
               this.loading = false
               this.$message.error(responses.data.msg)
             }
+          }).catch(error => {
+            this.loading = false
+            this.$message.error('Network Error')
+            console.log(error)
           })
         }
     }

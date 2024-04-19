@@ -12,10 +12,10 @@
       </el-date-picker>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="search">search</el-button>
+      <el-button type="primary" @click="search('user')">search</el-button>
     </el-form-item>
     <el-form-item>
-      <el-button v-permission="['admin']" type="primary" @click="search">admin search</el-button>
+      <el-button v-permission="['admin']" type="primary" @click="search('admin')">admin search</el-button>
     </el-form-item>
   </el-form>
   <el-table :data="data" v-if="tag">
@@ -36,7 +36,7 @@
     <el-table-column label="time" prop="time"></el-table-column>
     <el-table-column label="operation">
       <template slot-scope="scope">
-      <el-button type="primary" @click="save(scope.row)">change</el-button>
+      <el-button type="primary" v-if="type==='user'" @click="save(scope.row)">change</el-button>
       <el-button type="danger" @click="del(scope.row.id,scope.$index)">delete</el-button>
       </template>
     </el-table-column>
@@ -54,6 +54,7 @@ export default {
   name: "Rating",
   data(){
     return{
+      type:'',
       tag:false,
       data:[],
       time:[]
@@ -64,11 +65,15 @@ export default {
       save(row,'evaluate')
       this.$message.success('change success')
     },
-    search(){
+    search(type){
+      this.type = type
       this.tag=false
       let path='http://127.0.0.1:6325/evaluate/search'
       let params={
         username:getUserName()
+      }
+      if (type==='admin'){
+        params['username']=''
       }
       if (this.time){
         params['start']=this.time[0]
@@ -86,9 +91,9 @@ export default {
       })
     },
     del(id,index){
-      this.$confirm('是否确认删除', 'tip', {
+      this.$confirm('Are you sure you want to delete it', 'tip', {
         cancelButtonText: 'cancel',
-        confirmButtonText: '确定',
+        confirmButtonText: 'confirm',
         type: 'warning'
       }).then(() => {
         del(id,index,'evaluate',this.data)

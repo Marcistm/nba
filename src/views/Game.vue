@@ -16,7 +16,7 @@
       <el-table :data="table" max-height="600">
         <el-table-column label="name" prop="name" width="200">
           <template slot-scope="scope">
-            <el-button type="text">{{scope.row.name}}</el-button>
+            <el-button type="text" @click="playerComments(gameId,scope.row.name)">{{scope.row.name}}</el-button>
           </template>
         </el-table-column>
         <el-table-column label="points" prop="points"></el-table-column>
@@ -112,7 +112,7 @@ export default {
   mounted() {
     this.date=getCurrentDate()
     this.search()
-    this.playerComments('0022301171','Kelly Oubre Jr.')
+    // this.playerComments('0022301171','Kelly Oubre Jr.')
     // this.data=game
   }
 }

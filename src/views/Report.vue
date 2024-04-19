@@ -12,28 +12,23 @@
       </el-date-picker>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="search">search</el-button>
+      <el-button type="primary" @click="search('user')">search</el-button>
+    </el-form-item>
+    <el-form-item>
+      <el-button v-permission="['admin']" type="primary" @click="search('admin')">admin search</el-button>
     </el-form-item>
   </el-form>
   <el-table :data="data" v-if="tag">
-    <el-table-column label="player" prop="name"></el-table-column>
-    <el-table-column label="rate">
-      <template slot-scope="scope">
-        <el-rate
-            v-model="scope.row.rate"
-            :colors="$store.state.colors">
-        </el-rate>
-      </template>
-    </el-table-column>
     <el-table-column label="comment" prop="comment">
       <template slot-scope="scope">
-        <el-input type="textarea" autosize v-model="scope.row.comment"></el-input>
+        <el-input v-if="type==='user'" type="textarea" autosize v-model="scope.row.comment"></el-input>
+        <span v-else>{{scope.row.comment}}</span>
       </template>
     </el-table-column>
     <el-table-column label="time" prop="time"></el-table-column>
     <el-table-column label="operation">
       <template slot-scope="scope">
-      <el-button type="primary" @click="save(scope.row)">change</el-button>
+      <el-button type="primary" v-if="type==='user'" @click="save(scope.row)">change</el-button>
       <el-button type="danger" @click="del(scope.row.id,scope.$index)">delete</el-button>
       </template>
     </el-table-column>
@@ -51,6 +46,7 @@ export default {
   name: "Rating",
   data(){
     return{
+      type:'',
       tag:false,
       data:[],
       time:[]
@@ -61,7 +57,8 @@ export default {
       save(row,'evaluate_report')
       this.$message.success('change success')
     },
-    search(){
+    search(type){
+      this.type=type
       this.tag=false
       let path='http://127.0.0.1:6325/report/search'
       let params={
@@ -71,10 +68,12 @@ export default {
         params['start']=this.time[0]
         params['end']=this.time[1]
       }
+      if (type==='admin'){
+        params['username']=''
+      }
       axios.get(path,{params:params}).then(res=>{
         if (res.data.code===200){
           this.data=res.data.data
-          convertColsToNumber(this.data,'rate')
           this.tag=true
         }
       }).catch(error => {
@@ -83,9 +82,9 @@ export default {
       })
     },
     del(id,index){
-      this.$confirm('是否确认删除', 'tip', {
+      this.$confirm('Are you sure you want to delete it', 'tip', {
         cancelButtonText: 'cancel',
-        confirmButtonText: '确定',
+        confirmButtonText: 'confirm',
         type: 'warning'
       }).then(() => {
         del(id,index,'evaluate_report',this.data)

@@ -20,6 +20,9 @@
                     <el-form-item>
                         <el-button type="primary" size="medium" :loading="loading" style="width:100%" @click="submitForm('loginForm')">login</el-button>
                     </el-form-item>
+                  <el-form-item>
+                    <el-button type="primary" size="medium" :loading="loading" style="width:100%" @click="register">register</el-button>
+                  </el-form-item>
                 </el-form>
             </div>
         </div>
@@ -72,6 +75,9 @@ export default {
                   return false;
               }
           });
+      },
+      register(){
+        this.$router.replace('/register')
       },
       login(){
         // let path = 'http://127.0.0.1:5000/login'

@@ -17,6 +17,11 @@ export const constRouter = [
       component: () => import('@/views/login/Login'),
       hidden: true //导航菜单忽略选项
   },
+    {
+        path: '/register',
+        component: () => import('@/views/login/Register'),
+        hidden: true //导航菜单忽略选项
+    },
   {
     path: '/resetPass',
     component: () => import('@/views/login/resetPass'),
@@ -28,7 +33,22 @@ export const constRouter = [
       redirect: '/index',
       hidden: true,
   },
-
+    {
+        path: '/player',
+        component: Layout, //应用布局页
+        name: 'player',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Player'),
+                name: 'index',
+                meta: {
+                    title: "player",
+                    icon: 'el-icon-edit',
+                }
+            }
+        ]
+    },
   {
       path: '/index',
       component: Layout, //应用布局页
@@ -41,7 +61,7 @@ export const constRouter = [
         {
           path: '',
           component: () => import('@/views/index/index.vue'),
-          name: 'indexs',
+          name: 'index',
           meta: {
             title: "index",
             icon: 'el-icon-edit',
@@ -50,6 +70,27 @@ export const constRouter = [
         }
       ]
   },
+
+    {
+        path: '/data',
+        component: Layout,
+        redirect: '/data/index',
+        meta: { title: 'Data', icon: 'el-icon-edit-outline', },
+        children: [
+            {
+                path: 'radar',
+                component: () => import('@/views/data/Radar'),
+                name: 'Report',
+                meta: { title: 'Radar', icon: 'el-icon-edit-outline', }
+            },
+            {
+                path: 'radar1',
+                component: () => import('@/views/data/Radar'),
+                name: 'Report',
+                meta: { title: 'Radar1', icon: 'el-icon-edit-outline', }
+            }
+            ]
+    },
 ]
 
 // 动态路由
@@ -113,6 +154,18 @@ export const asyncRoutes = [
                 component: () => import('@/views/User'),
                 name: 'Report',
                 meta: { title: 'User', icon: 'el-icon-edit-outline',roles:['admin'] }
+            }]
+    },
+    {
+        path: '/report',
+        component: Layout,
+        redirect: '/report',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Report'),
+                name: 'Report',
+                meta: { title: 'Report', icon: 'el-icon-edit-outline' }
             }]
     },
 
