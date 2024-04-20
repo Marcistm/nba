@@ -78,7 +78,7 @@ export default {
         login(){
           let path = 'http://127.0.0.1:6325/change_pswd'
           let value = {
-            'work_id': getUser(),
+            'username': getUser(),
             'password': this.loginForm.password
           }
           axios.put(path, value).then(responses => {

@@ -15,6 +15,7 @@
 
 <script>
 import axios from "axios";
+import {getTeams} from "@/api/api";
 
 export default {
   name: "PlayerSelect",
@@ -38,17 +39,11 @@ export default {
         this.players=res.data.data
       })
     },
-    getTeams(){
-      let path='http://127.0.0.1:6325/team/get'
-      axios.get(path).then(res=>{
-        if (res.data.code===200){
-          this.teams=res.data.data
-        }
-      })
-    },
   },
   mounted() {
-    this.getTeams()
+    getTeams().then((data) => {
+      this.teams=data
+    })
   }
 }
 </script>

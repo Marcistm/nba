@@ -57,7 +57,17 @@ export default {
           callback();
         }
       }
+      const validateUsername = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please enter your username again'));
+        }else if (this.username.includes(value)) {
+          callback(new Error('username has exited'));
+        }  else {
+          callback();
+        }
+      }
         return {
+        username:[],
             loading: false, //登陆状态
             loginForm:{  // 登陆表单
               username:'',
@@ -67,7 +77,7 @@ export default {
             },
             rules:{  //登陆验证规则
               username:[
-                { validator: validatePass, trigger: 'blur' }
+                { validator: validateUsername, trigger: 'blur' }
               ],
               name: [
                 { required:true, trigger: 'blur' }
@@ -81,7 +91,19 @@ export default {
             }
         }
     },
-    methods:{
+  mounted() {
+    this.getAllUsername()
+  },
+  methods:{
+      getAllUsername(){
+        let path = 'http://127.0.0.1:6325/user/username/get'
+        axios.get(path).then(res=>{
+          if (res.data.code===200){
+            this.username=res.data.data
+            console.log(this.username)
+          }
+        })
+      },
         submitForm(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {

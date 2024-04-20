@@ -19,6 +19,7 @@
     </el-form-item>
   </el-form>
   <el-table :data="data" v-if="tag">
+    <el-table-column v-if="type==='admin'" label="username" prop="username"></el-table-column>
     <el-table-column label="comment" prop="comment">
       <template slot-scope="scope">
         <el-input v-if="type==='user'" type="textarea" autosize v-model="scope.row.comment"></el-input>

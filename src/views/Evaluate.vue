@@ -19,6 +19,7 @@
     </el-form-item>
   </el-form>
   <el-table :data="data" v-if="tag">
+    <el-table-column v-if="type==='admin'" label="username" prop="username"></el-table-column>
     <el-table-column label="player" prop="name"></el-table-column>
     <el-table-column label="rate">
       <template slot-scope="scope">

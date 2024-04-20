@@ -34,3 +34,10 @@ export function getTeams() {
         })
 }
 
+export function playerSearch() {
+    const path = 'http://127.0.0.1:6325/player/search';
+    return axios.get(path)
+        .then((res) => {
+            return res.data.data;
+        })
+}

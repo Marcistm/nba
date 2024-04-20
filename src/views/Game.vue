@@ -112,8 +112,6 @@ export default {
   mounted() {
     this.date=getCurrentDate()
     this.search()
-    // this.playerComments('0022301171','Kelly Oubre Jr.')
-    // this.data=game
   }
 }
 </script>

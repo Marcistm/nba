@@ -27,12 +27,24 @@ export const constRouter = [
     component: () => import('@/views/login/resetPass'),
     hidden: true //导航菜单忽略选项
   },
-  {
-      path: '',
-      component: Layout, //应用布局页
-      redirect: '/index',
-      hidden: true,
-  },
+    {
+        path: '',
+        component: Layout,
+        hidden: true,
+    },
+    {
+        path: '/game',
+        component: Layout,
+        name:'game',
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/Game'),
+                name: 'index',
+                meta: { title: 'Game', icon: 'el-icon-edit-outline', }
+            }]
+    },
+
     {
         path: '/player',
         component: Layout, //应用布局页
@@ -43,51 +55,30 @@ export const constRouter = [
                 component: () => import('@/views/Player'),
                 name: 'index',
                 meta: {
-                    title: "player",
+                    title: "Player",
                     icon: 'el-icon-edit',
                 }
             }
         ]
     },
-  {
-      path: '/index',
-      component: Layout, //应用布局页
-      name: 'index',
-      meta:{
-          title: "index", //导航菜单项标题
-          icon: 'el-icon-edit' //导航菜单图标
-      },
-      children: [
-        {
-          path: '',
-          component: () => import('@/views/index/index.vue'),
-          name: 'index',
-          meta: {
-            title: "index",
-            icon: 'el-icon-edit',
-            roles: ['admin']
-          }
-        }
-      ]
-  },
 
     {
         path: '/data',
         component: Layout,
-        redirect: '/data/index',
+        name:'data',
         meta: { title: 'Data', icon: 'el-icon-edit-outline', },
         children: [
             {
-                path: 'radar',
-                component: () => import('@/views/data/Radar'),
+                path: 'radar/player',
+                component: () => import('@/views/data/PlayerRadar'),
                 name: 'Report',
-                meta: { title: 'Radar', icon: 'el-icon-edit-outline', }
+                meta: { title: 'Player Radar', icon: 'el-icon-edit-outline', }
             },
             {
-                path: 'radar1',
-                component: () => import('@/views/data/Radar'),
+                path: 'radar/team',
+                component: () => import('@/views/data/TeamRadar'),
                 name: 'Report',
-                meta: { title: 'Radar1', icon: 'el-icon-edit-outline', }
+                meta: { title: 'Team Radar', icon: 'el-icon-edit-outline', }
             }
             ]
     },
@@ -132,18 +123,7 @@ export const asyncRoutes = [
             }]
     },
 
-    {
-        path: '/game',
-        component: Layout,
-        redirect: '/game',
-        children: [
-            {
-                path: '',
-                component: () => import('@/views/Game'),
-                name: 'Report',
-                meta: { title: 'Game', icon: 'el-icon-edit-outline', }
-            }]
-    },
+
     {
         path: '/user',
         component: Layout,
