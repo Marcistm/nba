@@ -1,5 +1,5 @@
 <template>
-  <div class="schedule">
+  <div class="schedule" v-loading="loading">
     <el-date-picker v-model="date" value-format="yyyy-MM-dd" @change="search"></el-date-picker>
     <el-card  v-for="(game, index) in data" :key="index" class="game">
       <div slot="header" class="game-header">
@@ -64,13 +64,14 @@ export default {
       table:[],
       tag:false,
       data:[],
-      work_number:'',
+      loading:false,
       work_procedure:'',
       work_name_table:[],
     }
   },
   methods:{
     evaluate(row){
+      console.log(row)
       this.$refs.EvaluateDialog.row=row
       this.$refs.EvaluateDialog.tag=true
     },
@@ -99,12 +100,14 @@ export default {
       })
     },
     search(){
+      this.loading=true
       let path='http://127.0.0.1:6325/game/search'
       let params={
         date:this.date
       }
       axios.get(path,{params:params}).then(res=>{
         this.data=res.data.data
+        this.loading=false
       })
     },
 

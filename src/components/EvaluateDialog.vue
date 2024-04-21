@@ -1,5 +1,6 @@
 <template>
 <el-dialog :visible.sync="tag" >
+  <div style="display: flex; justify-content: center; align-items: center;">
     <el-card class="player-card">
       <div slot="header">
         <span>{{ row.name }}</span>
@@ -7,7 +8,7 @@
       </div>
       <div class="card-content">
         <div class="card-item">
-          <div class="item" v-for="(value, key) in row" :key="key" v-if="key !== 'name' && key !== 'points'">
+          <div class="item" v-for="(value, key) in row" :key="key" v-if="!['points','name','gameId'].includes(key)">
             <span class="item-label">{{ formatLabel(key) }}</span>
             <br>
             <span class="item-value">{{ formatValue(key, value) }}</span>
@@ -15,7 +16,7 @@
         </div>
       </div>
     </el-card>
-
+  </div>
 
   <el-form :inline="true">
     <el-form-item label="rate">

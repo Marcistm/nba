@@ -79,6 +79,12 @@ export const constRouter = [
                 component: () => import('@/views/data/TeamRadar'),
                 name: 'Report',
                 meta: { title: 'Team Radar', icon: 'el-icon-edit-outline', }
+            },
+            {
+                path: 'top/10',
+                component: () => import('@/views/data/TOP10'),
+                name: 'Report',
+                meta: { title: 'Top10', icon: 'el-icon-edit-outline', }
             }
             ]
     },
