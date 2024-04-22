@@ -81,10 +81,10 @@ export const constRouter = [
                 meta: { title: 'Team Radar', icon: 'el-icon-edit-outline', }
             },
             {
-                path: 'top/10',
-                component: () => import('@/views/data/TOP10'),
+                path: 'top',
+                component: () => import('@/views/data/TOP'),
                 name: 'Report',
-                meta: { title: 'Top10', icon: 'el-icon-edit-outline', }
+                meta: { title: 'Top', icon: 'el-icon-edit-outline', }
             }
             ]
     },
